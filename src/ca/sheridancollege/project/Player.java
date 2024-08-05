@@ -46,7 +46,6 @@ public abstract class Player {
      * with logic to play your game.
      */
     public abstract void play();
-    public abstract boolean hasCard(String rank);
 
     public abstract ArrayList<ACard> giveCards(String rank);
 

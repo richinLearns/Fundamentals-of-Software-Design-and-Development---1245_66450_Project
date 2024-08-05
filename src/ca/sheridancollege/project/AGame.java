@@ -33,17 +33,20 @@ public class AGame extends Game {
     @Override
     public void play() {
         boolean gameOver = false;
-    
-        while (!isGameOver()) {
-            for (APlayer player : players) {
+        
+        for (APlayer player : players) {
                 player.play();
-                if (isGameOver()) {
-                    gameOver = true;
-                    break;
-                }
-            }
+                
         }
-        declareWinner();
+//        while (!isGameOver()) {
+//            for (APlayer player : players) {
+//                
+//                if (isGameOver()) {
+//                    gameOver = true;
+//                    break;
+//                }
+//            }
+//        }
     }
 
     @Override

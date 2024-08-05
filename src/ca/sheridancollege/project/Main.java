@@ -4,6 +4,8 @@
  */
 package ca.sheridancollege.project;
 
+
+
 /**
  *
  * @author richi
@@ -11,6 +13,7 @@ package ca.sheridancollege.project;
 public class Main {
     public static void main(String[] args) {
         // Create a new game
+        
         AGame game = new AGame("Go Fish");
         
         
@@ -28,6 +31,7 @@ public class Main {
 
         System.out.println("Starting the game...");
         game.play();
+       
     }
     
 }
