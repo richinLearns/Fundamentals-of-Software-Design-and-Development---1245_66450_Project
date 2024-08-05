@@ -11,6 +11,7 @@ package ca.sheridancollege.project;
  * @author dancye
  * @author Paul Bonenfant Jan 2020
  */
+import java.util.ArrayList;
 public abstract class Player {
 
     private String name; //the unique name for this player
@@ -22,7 +23,7 @@ public abstract class Player {
      */
     public Player(String name) {
         this.name = name;
-    }
+    }   
 
     /**
      * @return the player name
@@ -45,5 +46,14 @@ public abstract class Player {
      * with logic to play your game.
      */
     public abstract void play();
+    public abstract boolean hasCard(String rank);
+
+    public abstract ArrayList<ACard> giveCards(String rank);
+
+    public abstract ArrayList<ACard> getHand();
+
+    public abstract void addCardToHand(ACard card);
+
+    public abstract void removeCardFromHand(ACard card);
 
 }
