@@ -17,47 +17,29 @@ import java.util.Collections;
  */
 public class GroupOfCards {
 
-    //The group of cards, stored in an ArrayList
     private ArrayList<ACard> cards;
-    private int size;//the size of the grouping
 
-    public GroupOfCards(int size) {
-        this.size = size;
-        cards = new ArrayList<>(size);
-        createDeck();
-    }
-     private void createDeck() {
-        String[] suits = {"Hearts", "Diamonds", "Clubs", "Spades"};
+    public GroupOfCards() {
+        cards = new ArrayList<>();
         String[] ranks = {"2", "3", "4", "5", "6", "7", "8", "9", "10", "Jack", "Queen", "King", "Ace"};
-        for (String suit : suits) {
-            for (String rank : ranks) {
-                cards.add(new ACard(suit, rank));
+        String[] suits = {"Hearts", "Diamonds", "Clubs", "Spades"};
+        
+        for (String rank : ranks) {
+            for (String suit : suits) {
+                cards.add(new ACard(rank, suit));
             }
         }
     }
-     
-     public void shuffle() {
+
+    public void shuffle() {
         Collections.shuffle(cards);
     }
-     
-     public ArrayList<ACard> deal(int numCards) {
-        ArrayList<ACard> hand = new ArrayList<>();
-        for (int i = 0; i < numCards; i++) {
-            hand.add(cards.remove(0));
-        }
-        return hand;
+
+    public ACard drawCard() {
+        return cards.remove(0);
     }
 
-    public ArrayList<ACard> getCards() {
-        return cards;
+    public boolean isEmpty() {
+        return cards.isEmpty();
     }
-
-    public int getSize() {
-        return size;
-    }
-
-    public void setSize(int size) {
-        this.size = size;
-    }
-
-}//end class
+}

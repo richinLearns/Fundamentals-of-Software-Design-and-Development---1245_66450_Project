@@ -8,71 +8,67 @@ package ca.sheridancollege.project;
  *
  * @author richi
  */
-import java.util.ArrayList;
 public class AGame extends Game {
-     private GroupOfCards deck;
-    private ArrayList<APlayer> players;
+    private APlayer player1;
+    private APlayer player2;
+    private GroupOfCards groupOfCards;
+    private ScoreCalculator scoreCalculator;
 
-    public AGame(String name) {
+    public AGame(String name, APlayer player1, APlayer player2, GroupOfCards groupOfCards) {
         super(name);
-        deck = new GroupOfCards(52);
-        players = new ArrayList<>();
-    }
-
-    public void shuffleAndDeal() {
-        deck.shuffle();
-        for (APlayer player : players) {
-            player.getHand().addAll(deck.deal(7)); // Deal 7 cards to each player
-        }
-    }
-
-    public void registerPlayer(APlayer player) {
-        players.add(player);
+        this.player1 = player1;
+        this.player2 = player2;
+        this.groupOfCards = groupOfCards;
+        this.scoreCalculator = new ScoreCalculator();
     }
 
     @Override
     public void play() {
-        boolean gameOver = false;
-        while (!gameOver) {
-            for (APlayer player : players) {
-                player.play();
-                if (isGameOver()) {
-                    gameOver = true;
-                    break;
-                }
-            }
+        groupOfCards.shuffle();
+        dealInitialCards();
+        System.out.println("Starting the game...");
+
+        while (!groupOfCards.isEmpty() && !anyPlayerHandEmpty()) {
+            takeTurn(player1);
+            takeTurn(player2);
         }
+
+        int player1Score = scoreCalculator.calculateScore(player1);
+        int player2Score = scoreCalculator.calculateScore(player2);
+
+        System.out.println(player1.getName() + "'s score: " + player1Score);
+        System.out.println(player2.getName() + "'s score: " + player2Score);
+
         declareWinner();
+    }
+
+    private void dealInitialCards() {
+        for (int i = 0; i < 7; i++) {
+            player1.getHand().add(groupOfCards.drawCard());
+            player2.getHand().add(groupOfCards.drawCard());
+        }
+    }
+
+    private void takeTurn(APlayer player) {
+        System.out.println(player.getName() + "'s turn. Hand: " + player.getHand());
+        player.play();
+    }
+
+    private boolean anyPlayerHandEmpty() {
+        return player1.getHand().isEmpty() || player2.getHand().isEmpty();
     }
 
     @Override
     public void declareWinner() {
-        APlayer winner = null;
-        int highestScore = 0;
-        ScoreCalculator scoreCalculator = new ScoreCalculator();
+        int player1Score = scoreCalculator.calculateScore(player1);
+        int player2Score = scoreCalculator.calculateScore(player2);
 
-        for (APlayer player : players) {
-            int score = scoreCalculator.calculateScore(player);
-            System.out.println(player.getName() + "'s score: " + score);
-            if (score > highestScore) {
-                highestScore = score;
-                winner = player;
-            }
+        if (player1Score > player2Score) {
+            System.out.println(player1.getName() + " wins!");
+        } else if (player2Score > player1Score) {
+            System.out.println(player2.getName() + " wins!");
+        } else {
+            System.out.println("It's a tie!");
         }
-
-        if (winner != null) {
-            System.out.println("The winner is " + winner.getName() + " with a score of " + highestScore);
-        }
-    }
-
-    private boolean isGameOver() {
-        boolean deckEmpty = deck.getCards().isEmpty();
-        boolean playerHandEmpty = players.stream().anyMatch(player -> player.getHand().isEmpty());
-
-        // Debugging print statements
-        System.out.println("Deck empty: " + deckEmpty);
-        System.out.println("Any player's hand empty: " + playerHandEmpty);
-
-        return deckEmpty || playerHandEmpty;
     }
 }

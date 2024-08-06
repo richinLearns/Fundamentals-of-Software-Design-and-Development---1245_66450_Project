@@ -47,12 +47,6 @@ public abstract class Player {
      */
     public abstract void play();
 
-    public abstract ArrayList<ACard> giveCards(String rank);
-
-    public abstract ArrayList<ACard> getHand();
-
-    public abstract void addCardToHand(ACard card);
-
     public abstract void removeCardFromHand(ACard card);
 
 }

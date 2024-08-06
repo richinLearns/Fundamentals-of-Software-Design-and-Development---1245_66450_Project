@@ -5,7 +5,7 @@
  */
 package ca.sheridancollege.project;
 
-import java.util.ArrayList;
+
 
 /**
  * The class that models your game. You should create a more specific child of this class and instantiate the methods
@@ -14,28 +14,22 @@ import java.util.ArrayList;
  * @author dancye
  * @author Paul Bonenfant Jan 2020
  */
+
 public abstract class Game {
-    private final String name; // The title of the game
-    private ArrayList<Player> players; // The players of the game
+    private String name;
 
     public Game(String name) {
         this.name = name;
-        players = new ArrayList<>();
     }
+
+    public abstract void play();
+    public abstract void declareWinner();
 
     public String getName() {
         return name;
     }
 
-    public ArrayList<Player> getPlayers() {
-        return players;
+    public void setName(String name) {
+        this.name = name;
     }
-
-    public void setPlayers(ArrayList<Player> players) {
-        this.players = players;
-    }
-
-    public abstract void play();
-
-    public abstract void declareWinner();
 }

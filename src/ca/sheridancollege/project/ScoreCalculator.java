@@ -12,7 +12,7 @@ public class ScoreCalculator {
     
     public int calculateScore(APlayer player) {
 
-        return player.getHand().size() / 4; 
+        return player.getBooks().size();
     }
     
 }

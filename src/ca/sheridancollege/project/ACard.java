@@ -10,25 +10,7 @@ package ca.sheridancollege.project;
  */
 public class ACard extends Card {
     
-     private String suit;
-    private String rank;
-
-    public ACard(String suit, String rank) {
-        this.suit = suit;
-        this.rank = rank;
+  public ACard(String rank, String suit) {
+        super(rank, suit);
     }
-
-    public String getSuit() {
-        return suit;
-    }
-
-    public String getRank() {
-        return rank;
-    }
-
-    @Override
-    public String toString() {
-        return rank + " of " + suit;
-    }
-    
 }

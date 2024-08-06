@@ -9,61 +9,58 @@ package ca.sheridancollege.project;
  * @author richi
  */
 import java.util.ArrayList;
-
+import java.util.HashMap;
 
 public class APlayer extends Player {
-    private ArrayList<ACard> hand;
+    private ArrayList<Card> hand;
+    private ArrayList<Card> playedCards;
+    private HashMap<String, Integer> books;
 
     public APlayer(String name) {
         super(name);
         hand = new ArrayList<>();
+        playedCards = new ArrayList<>();
+        books = new HashMap<>();
     }
 
-    @Override
-    public ArrayList<ACard> getHand() {
+    public ArrayList<Card> getHand() {
         return hand;
     }
 
+    public ArrayList<Card> getPlayedCards() {
+        return playedCards;
+    }
+
+    public HashMap<String, Integer> getBooks() {
+        return books;
+    }
+
     @Override
-    public void addCardToHand(ACard card) {
-        hand.add(card);
+    public void play() {
+        if (!hand.isEmpty()) {
+            Card cardToPlay = hand.remove(0); // Play the first card in hand
+            playedCards.add(cardToPlay); // Add the card to played cards
+            System.out.println(getName() + " plays " + cardToPlay);
+            checkForBook(cardToPlay.getRank());
+        }
+    }
+
+    private void checkForBook(String rank) {
+        int count = 0;
+        for (Card card : playedCards) {
+            if (card.getRank().equals(rank)) {
+                count++;
+            }
+        }
+        if (count == 4) {
+            books.put(rank, books.getOrDefault(rank, 0) + 1);
+            playedCards.removeIf(card -> card.getRank().equals(rank));
+            System.out.println(getName() + " has formed a book of " + rank + "s");
+        }
     }
 
     @Override
     public void removeCardFromHand(ACard card) {
         hand.remove(card);
-    }
-
-    public boolean hasCard(String rank) {
-        for (ACard card : hand) {
-            if (card.getRank().equals(rank)) {
-                return true;
-            }
-        }
-        return false;
-    }
-
-    @Override
-    public ArrayList<ACard> giveCards(String rank) {
-        ArrayList<ACard> cardsToGive = new ArrayList<>();
-        for (ACard card : hand) {
-            if (card.getRank().equals(rank)) {
-                cardsToGive.add(card);
-            }
-        }
-        hand.removeAll(cardsToGive);
-        return cardsToGive;
-    }
-
-    @Override
-    public void play() {
-        System.out.println(getName() + "'s turn. Hand: " + hand);
-        // Simple play logic for testing
-        if (!hand.isEmpty()) {
-            ACard card = hand.remove(0); // Remove a card from hand
-            System.out.println(getName() + " plays " + card);
-        } else {
-            System.out.println(getName() + " has no cards left!");
-        }
     }
 }
