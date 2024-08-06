@@ -9,13 +9,11 @@ package ca.sheridancollege.project;
  * @author richi
  */
 import java.util.ArrayList;
-import javax.swing.JOptionPane;
+
 
 public class APlayer extends Player {
     private ArrayList<ACard> hand;
-    private String cName;
-    
-    
+
     public APlayer(String name) {
         super(name);
         hand = new ArrayList<>();
@@ -36,7 +34,6 @@ public class APlayer extends Player {
         hand.remove(card);
     }
 
-    
     public boolean hasCard(String rank) {
         for (ACard card : hand) {
             if (card.getRank().equals(rank)) {
@@ -61,19 +58,12 @@ public class APlayer extends Player {
     @Override
     public void play() {
         System.out.println(getName() + "'s turn. Hand: " + hand);
-        setName();
-        giveCards(getName());
-        
-        
+        // Simple play logic for testing
+        if (!hand.isEmpty()) {
+            ACard card = hand.remove(0); // Remove a card from hand
+            System.out.println(getName() + " plays " + card);
+        } else {
+            System.out.println(getName() + " has no cards left!");
+        }
     }
-    public void setName(){
-        String name = JOptionPane.showInputDialog("Enter rank of the Card");
-        this.cName = name;
-        
-    }
-    public String getName(){
-        return this.cName;
-    }
-    
-    
 }

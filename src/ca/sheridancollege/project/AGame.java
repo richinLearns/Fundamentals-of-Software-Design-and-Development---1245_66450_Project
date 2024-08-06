@@ -10,7 +10,7 @@ package ca.sheridancollege.project;
  */
 import java.util.ArrayList;
 public class AGame extends Game {
-    private GroupOfCards deck;
+     private GroupOfCards deck;
     private ArrayList<APlayer> players;
 
     public AGame(String name) {
@@ -33,20 +33,16 @@ public class AGame extends Game {
     @Override
     public void play() {
         boolean gameOver = false;
-        
-        for (APlayer player : players) {
+        while (!gameOver) {
+            for (APlayer player : players) {
                 player.play();
-                
+                if (isGameOver()) {
+                    gameOver = true;
+                    break;
+                }
+            }
         }
-//        while (!isGameOver()) {
-//            for (APlayer player : players) {
-//                
-//                if (isGameOver()) {
-//                    gameOver = true;
-//                    break;
-//                }
-//            }
-//        }
+        declareWinner();
     }
 
     @Override
@@ -57,6 +53,7 @@ public class AGame extends Game {
 
         for (APlayer player : players) {
             int score = scoreCalculator.calculateScore(player);
+            System.out.println(player.getName() + "'s score: " + score);
             if (score > highestScore) {
                 highestScore = score;
                 winner = player;
@@ -69,8 +66,13 @@ public class AGame extends Game {
     }
 
     private boolean isGameOver() {
-        return deck.getCards().isEmpty() || players.stream().anyMatch(player -> player.getHand().isEmpty());
-    }
+        boolean deckEmpty = deck.getCards().isEmpty();
+        boolean playerHandEmpty = players.stream().anyMatch(player -> player.getHand().isEmpty());
 
-    
+        // Debugging print statements
+        System.out.println("Deck empty: " + deckEmpty);
+        System.out.println("Any player's hand empty: " + playerHandEmpty);
+
+        return deckEmpty || playerHandEmpty;
+    }
 }

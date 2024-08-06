@@ -10,6 +10,7 @@ package ca.sheridancollege.project;
  *
  * @author richi
  */
+//final version
 public class Main {
     public static void main(String[] args) {
         // Create a new game
