@@ -13,7 +13,6 @@ package ca.sheridancollege.project;
 //final version 2.0
 public class Main {
     public static void main(String[] args) {
-        // Create a new game
         APlayer player1 = new APlayer("Player 1");
         APlayer player2 = new APlayer("Player 2");
         GroupOfCards groupOfCards = new GroupOfCards();

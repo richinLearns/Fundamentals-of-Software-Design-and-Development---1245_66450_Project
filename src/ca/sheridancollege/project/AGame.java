@@ -8,11 +8,13 @@ package ca.sheridancollege.project;
  *
  * @author richi
  */
+import java.util.Scanner;
 public class AGame extends Game {
     private APlayer player1;
     private APlayer player2;
     private GroupOfCards groupOfCards;
     private ScoreCalculator scoreCalculator;
+    private Scanner scanner;
 
     public AGame(String name, APlayer player1, APlayer player2, GroupOfCards groupOfCards) {
         super(name);
@@ -20,6 +22,7 @@ public class AGame extends Game {
         this.player2 = player2;
         this.groupOfCards = groupOfCards;
         this.scoreCalculator = new ScoreCalculator();
+        this.scanner = new Scanner(System.in);
     }
 
     @Override
@@ -51,7 +54,7 @@ public class AGame extends Game {
 
     private void takeTurn(APlayer player) {
         System.out.println(player.getName() + "'s turn. Hand: " + player.getHand());
-        player.play();
+        player.playTurn(scanner, player == player1 ? player2 : player1, groupOfCards);
     }
 
     private boolean anyPlayerHandEmpty() {
